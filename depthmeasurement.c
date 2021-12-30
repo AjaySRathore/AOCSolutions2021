@@ -1,20 +1,7 @@
 #include <stdio.h>
 #include <string.h>
-
-int * getInput(int *integers, char filepath[])
-{
-
-    FILE *file = fopen(filepath, "r");
-    int i=0;
-    int num;
-    while(fscanf(file, "%d", &num) > 0)
-    {
-        integers[i] = num;
-        i++;
-    }
-    fclose(file);
-    return integers;
-}
+int countIncreasesInSlidingData(int *counter, int *inputArray, int noOfItems);
+int * getInput(int *integers, char filepath[]);
 
 int countIncreasesInData(int *counter, int *inputArray, int noOfItems)
 {
@@ -36,6 +23,12 @@ int main()
     char filepath[FILENAME_MAX];
     printf("Submit input file path:");
     scanf("%s", &filepath);
+    printf("Submit the program to run\n");
+    printf("\t1. Normal Increases\n");
+    printf("\t2. Sliding Incrases\n");
+    int program;
+    scanf("%d", &program);
+    printf("Running progam no. %d", program);
     FILE *file = fopen(filepath, "r");
     int noOfScans = 0;
     char c;
@@ -48,8 +41,20 @@ int main()
     int integers[noOfScans];
     inputArray = getInput(integers, filepath);
     static int increasesCount = 0;
-    int result = countIncreasesInData(&increasesCount, inputArray, noOfScans);
-    printf("Increases count: %d", increasesCount);
+    int result = -1;
+    switch (program)
+    {
+        case 1:
+            result = countIncreasesInData(&increasesCount, inputArray, noOfScans);
+            break;
+        case 2:
+            result = countIncreasesInSlidingData(&increasesCount, inputArray, noOfScans);
+            break;
+        default:
+            result = -1;
+    }
+
+    printf("Increases count: %d status: %d", increasesCount, result);
     return 0;
 }
 
