@@ -26,6 +26,7 @@ int main()
     printf("Submit the program to run\n");
     printf("\t1. Normal Increases\n");
     printf("\t2. Sliding Incrases\n");
+    printf("\t3. Position Dectector\n");
     int program;
     scanf("%d", &program);
     printf("Running progam no. %d", program);
@@ -39,22 +40,33 @@ int main()
     }
     fclose(file);
     int integers[noOfScans];
-    inputArray = getInput(integers, filepath);
+    char commands[noOfScans];
     static int increasesCount = 0;
+    static int multiplicationResult;
     int result = -1;
     switch (program)
     {
         case 1:
+
+            inputArray = getInput(integers, filepath);
             result = countIncreasesInData(&increasesCount, inputArray, noOfScans);
+            printf("Increases count: %d status: %d", increasesCount, result);
             break;
         case 2:
+            inputArray = getInput(integers, filepath);
             result = countIncreasesInSlidingData(&increasesCount, inputArray, noOfScans);
+            printf("Increases count: %d status: %d", increasesCount, result);
             break;
+        case 3:
+            getPositionInput(&integers, &commands, filepath);
+            printf("%d %c", integers[0], commands[0]);
+            multiplicationResult = positionDetecter(&integers, &commands, noOfScans);
+            printf("Mulitplication Result: %d \n", multiplicationResult);
         default:
             result = -1;
     }
 
-    printf("Increases count: %d status: %d", increasesCount, result);
+
     return 0;
 }
 
