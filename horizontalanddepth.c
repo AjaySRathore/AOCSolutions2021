@@ -3,19 +3,20 @@
 
 int positionDetecter(int *value, char *commands, int noOfCommands)
 {
-    int horizontalPos = 0, verticalPos = 0;
+    int horizontalPos = 0, verticalPos = 0, aim = 0;
     for (int i=0; i<noOfCommands; i++)
     {
         switch (*(commands + i))
         {
             case 'f':
                 horizontalPos += value[i];
+                verticalPos += (aim * value[i]);
                 break;
             case 'u':
-                verticalPos -= value[i];
+                aim -= value[i];
                 break;
             case 'd':
-                verticalPos += value[i];
+                aim += value[i];
                 break;
         }
     }
