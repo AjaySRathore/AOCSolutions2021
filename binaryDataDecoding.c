@@ -1,13 +1,16 @@
 #include <stdio.h>
 #include <math.h>
 
+#define INPUT_SIZE 12
+
 int binary_to_decimal(int *binaryArray)
 {
-    int dec;
+    int dec = 0;
     int pos = 0;
-    for(int i=sizeof(binaryArray)-1; i>=0; i++)
+    for(int i=INPUT_SIZE - 1; i>=0; i--)
     {
         dec += (pow(2, pos)*(binaryArray[i]));
+        printf("\n array: %d pos: %d", binaryArray[i], i);
         pos++;
     }
     return dec;
@@ -15,10 +18,10 @@ int binary_to_decimal(int *binaryArray)
 
 int getPowerConsumption(int *DecoderArray, int count)
 {
-    int gamma[12];
-    int epsilon[12];
+    int gamma[INPUT_SIZE];
+    int epsilon[INPUT_SIZE];
     int mid = count/2;
-    for(int i=0; i<12; i++)
+    for(int i=0; i<INPUT_SIZE; i++)
     {
         if(DecoderArray[i] < mid)
         {
@@ -31,18 +34,26 @@ int getPowerConsumption(int *DecoderArray, int count)
             epsilon[i] = 0;
         }
     }
-    printf("%d %d", gamma[1], epsilon[1]);
+    printf("\nGamma:");
+    for (int i=0; i<INPUT_SIZE; i++)
+        printf("%d", gamma[i]);
+    printf("\n");
+    printf("\nEpsilon:");
+    for (int i=0; i<INPUT_SIZE; i++)
+        printf("%d", epsilon[i]);
+    printf("\n");
     int gammaRate, epsilonRate;
     gammaRate = binary_to_decimal(gamma);
-    printf("gammaRate %d", gammaRate);
-    return 0;
+    epsilonRate = binary_to_decimal(epsilon);
+    printf("\ngammaRate %d %d\n", gammaRate, epsilonRate);
+    return gammaRate * epsilonRate;
 }
 
 
 int main()
 {
-    int gammaDecoderArray[12] = {0};
-    const char fpath[] = "/home/ajay/c_projects/inputDay3.txt";
+    int gammaDecoderArray[INPUT_SIZE] = {0};
+    const char fpath[] = "C:\\Users\\Ajay\\Desktop\\aocinputs\\inputDay3.txt";
     char c;
     int i = 0;
     int count = 1;
@@ -71,7 +82,7 @@ int main()
     }
     fclose(file);
     int result;
-
     result = getPowerConsumption(gammaDecoderArray, count);
+    printf("\nresult: %d\n", result);
     return 0;
 }
